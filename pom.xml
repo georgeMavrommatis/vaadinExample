@@ -18,19 +18,42 @@
 		<vaadin.version>23.2.6</vaadin.version>
 	</properties>
 	<dependencies>
+
+		<!-- Spring Boot JPA is a Java specification for managing relational data in Java applications.
+		It allows us to access and persist data between Java object/ class and relational database.
+		JPA follows Object-Relation Mapping (ORM). It is a set of interfaces.
+		It also provides a runtime EntityManager API for processing queries and transactions on the objects against the database.
+		It uses a platform-independent object-oriented query language JPQL (Java Persistent Query Language).-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
+
+		<!-- Spring Boot Starter Web is used for building RESTful applications using Spring MVC.
+		Spring Boot Starter Tomcat is the default embedded container for Spring Boot Starter Web.
+		We cannot exclude it while using web services.-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+
+		<!-- With DevTools when we make changes to Java code or properties file, the application gets updated with new changes.
+		It monitors for changes and automatically restarts the application. With the DevTools in the application's classpath,
+		the application is loaded in two different class loaders in the Java Virtual Machine. -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<!-- Vaadin is a server-side Java framework for creating web user interfaces. -->
 		<dependency>
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-spring-boot-starter</artifactId>
 		</dependency>
 
+		<!-- H2 is a relational database management system written in Java.
+		It can be embedded in Java applications or run in client-server mode. -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
@@ -40,6 +63,14 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+
+		<!-- Project Lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.24</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 	<dependencyManagement>
