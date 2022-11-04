@@ -1,6 +1,8 @@
 package gr.example.vaadindemo.persistence;
 
+import gr.example.vaadindemo.domain.Customer;
 import gr.example.vaadindemo.domain.Employee;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -18,18 +20,21 @@ import java.util.List;
  * @created 1/11/2022
  */
 @Component
+@Slf4j
 public class DBSeeder implements CommandLineRunner {
 
     // bankAccountRepo
     private EmployeeRepository employeeRepository;
+    private CustomerRepository customerRepository;
 
     /**
      * Constructor
      * @param employeeRepository  the first parameter dependency
      */
     @Autowired
-    public DBSeeder(EmployeeRepository employeeRepository) {
+    public DBSeeder(CustomerRepository customerRepository, EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
+        this.customerRepository = customerRepository;
     }
 
     /**
@@ -55,5 +60,41 @@ public class DBSeeder implements CommandLineRunner {
 
         // save employees
         employeeRepository.saveAll(employees);
+
+        //save customers
+        saveCustomers();
+    }
+
+    private void saveCustomers() {
+        // save a couple of customers
+        customerRepository.save(new Customer("Jack", "Bauer"));
+        customerRepository.save(new Customer("Chloe", "O'Brian"));
+        customerRepository.save(new Customer("Kim", "Bauer"));
+        customerRepository.save(new Customer("David", "Palmer"));
+        customerRepository.save(new Customer("Michelle", "Dessler"));
+
+        // fetch all customers
+        log.info("Customers found with findAll():");
+        log.info("-------------------------------");
+        for (Customer customer : customerRepository.findAll()) {
+            log.info(customer.toString());
+        }
+        log.info("");
+
+        // fetch an individual customer by ID
+        Customer customer = customerRepository.findById(1L).get();
+        log.info("Customer found with findOne(1L):");
+        log.info("--------------------------------");
+        log.info(customer.toString());
+        log.info("");
+
+        // fetch customers by last name
+        log.info("Customer found with findByLastNameStartsWithIgnoreCase('Bauer'):");
+        log.info("--------------------------------------------");
+        for (Customer bauer : customerRepository
+                .findByLastNameStartsWithIgnoreCase("Bauer")) {
+            log.info(bauer.toString());
+        }
+        log.info("");
     }
 }
